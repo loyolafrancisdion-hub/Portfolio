@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Francis | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,900,100&family=Itim&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #2e0057;
+    --mid: #5a0094;
+    --bright: #a000ff;
+    --pill: rgba(255, 255, 255, .28);
+    --pill-border: rgba(255, 255, 255, .35);
+    --text: #fff;
+    --head: "Fraunces", Georgia, serif;
+    --body: "Itim", "Comic Sans MS", sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--head);
+    color: var(--text);
+    background: linear-gradient(to bottom, var(--deep), var(--mid) 45%, var(--bright));
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Page transition: purple wipe + content rise ---------- */
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding: clamp(14px, 3vw, 28px);
+    position: relative;
+    flex-direction: column;
+  }
+  .page:target,
+  body:not(:has(:target)) #home { display: flex; animation: pageIn .7s cubic-bezier(.2, .8, .2, 1) both; }
+
+  .page::before {               /* the wipe */
+    content: "";
+    position: fixed; inset: 0;
+    background: linear-gradient(90deg, var(--bright), var(--deep));
+    transform: translateX(-101%);
+    pointer-events: none;
+    z-index: 50;
+  }
+  .page:target::before,
+  body:not(:has(:target)) #home::before { animation: wipe .75s cubic-bezier(.7, 0, .2, 1) both; }
+
+  .page:target .reveal > *,
+  body:not(:has(:target)) #home .reveal > * { animation: rise .7s cubic-bezier(.2, .8, .2, 1) both; }
+  .reveal > *:nth-child(1) { animation-delay: .35s !important; }
+  .reveal > *:nth-child(2) { animation-delay: .5s !important; }
+  .reveal > *:nth-child(3) { animation-delay: .65s !important; }
+
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes wipe {
+    0%   { transform: translateX(-101%); }
+    45%  { transform: translateX(0); }
+    100% { transform: translateX(101%); }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(26px) scale(.97); filter: blur(4px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+
+  /* ---------- Pill buttons ---------- */
+  .pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: .35em 1.2em;
+    font-family: var(--head); font-weight: 900;
+    font-size: clamp(1rem, 3.2vw, 1.9rem);
+    text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+    background: var(--pill);
+    border: 2px solid var(--pill-border);
+    border-radius: 999px;
+    transition: transform .25s, background .25s, box-shadow .25s;
+  }
+  a.pill:hover, a.pill:focus-visible {
+    transform: translateY(-4px) scale(1.06);
+    background: rgba(255, 255, 255, .45);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+    outline: none;
+  }
+  a.pill:active { transform: scale(.95); }
+  .pill.current { cursor: default; }
+
+  /* ---------- Top bars ---------- */
+  .nav-home { display: flex; justify-content: space-between; gap: 12px; }
+  .nav-home .pill { flex: 1 1 0; max-width: 340px; font-size: clamp(.9rem, 3vw, 1.7rem); }
+  .nav-home .pill.big { font-size: clamp(1.1rem, 3.8vw, 2.4rem); }
+
+  .nav-sub { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .nav-sub .pill { font-size: clamp(.9rem, 2.6vw, 1.6rem); }
+
+  /* ---------- HOME ---------- */
+  .home-main {
+    flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    align-items: center; gap: clamp(16px, 4vw, 48px); padding-top: 20px;
+  }
+  .photo { width: 100%; max-width: 440px; aspect-ratio: 1 / 1.1; object-fit: cover; border-radius: 6px; transition: transform .4s, box-shadow .4s; }
+  .photo:hover { transform: rotate(-2deg) scale(1.03); box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }
+  .welcome { text-align: center; font-size: clamp(1.8rem, 5.5vw, 4rem); line-height: 1.25; }
+
+  /* ---------- ABOUT ---------- */
+  .about-main { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 6px 0 16px; }
+  .about-main .photo { max-width: 300px; aspect-ratio: 4 / 3; }
+  .about-text {
+    font-family: var(--body); font-size: clamp(1rem, 2.1vw, 1.45rem); line-height: 1.45;
+    text-align: center; max-width: 980px; display: grid; gap: 1.2em;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-main { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; align-items: start; padding-top: 24px; }
+  .skills-main h3 { font-size: clamp(1.2rem, 2.6vw, 1.9rem); margin-bottom: .5em; }
+  .skills-main ul { list-style: none; font-size: clamp(1.1rem, 2.4vw, 1.8rem); display: grid; gap: .4em; }
+  .tech { text-align: center; }
+  .tech p { font-size: clamp(1.1rem, 2.4vw, 1.8rem); line-height: 1.4; }
+  .contacts { grid-column: 1 / 3; }
+  .contacts li { font-family: var(--body); font-size: clamp(.85rem, 1.8vw, 1.2rem); display: flex; align-items: center; gap: 12px; word-break: break-all; }
+  .contacts a { color: inherit; text-decoration: underline; }
+  .contacts svg { width: 28px; height: 28px; flex: none; }
+  .mascot { grid-column: 3; grid-row: 1 / 3; align-self: center; width: 100%; max-width: 440px; justify-self: end; animation: float 4s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-14px) rotate(2deg); } }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-main { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 5vw, 70px); padding-top: 40px; align-items: start; }
+  .project { display: grid; gap: 28px; text-align: center; justify-items: center; }
+  .project img { width: 100%; max-width: 440px; aspect-ratio: 16 / 9; object-fit: cover; border: 2px solid rgba(255, 255, 255, .6); transition: transform .35s, box-shadow .35s; }
+  .project:hover img { transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 40px rgba(0, 0, 0, .45); }
+  .project p { font-size: clamp(1rem, 2.4vw, 1.8rem); line-height: 1.4; max-width: 480px; }
+
+  /* ---------- NEXT / BACK ---------- */
+  .step {
+    align-self: flex-end; margin-top: auto; padding-top: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 900; font-size: clamp(1.1rem, 3vw, 2rem); text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .step .arrow { display: inline-flex; transition: transform .3s; }
+  .step svg { width: 1.3em; height: 1.3em; fill: rgba(255, 255, 255, .6); }
+  .step:hover .arrow, .step:focus-visible .arrow { animation: nudge .7s ease-in-out infinite; }
+  .step.back:hover .arrow, .step.back:focus-visible .arrow { animation-name: nudgeBack; }
+  .step:focus-visible { outline: 2px dashed #fff; outline-offset: 6px; }
+  @keyframes nudge     { 50% { transform: translateX(10px); } }
+  @keyframes nudgeBack { 50% { transform: translateX(-10px); } }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    .home-main { grid-template-columns: 1fr; justify-items: center; }
+    .skills-main { grid-template-columns: 1fr 1fr; }
+    .contacts { grid-column: 1 / 3; }
+    .mascot { grid-column: 1 / 3; grid-row: auto; justify-self: center; max-width: 260px; }
+    .projects-main { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .nav-home { flex-wrap: wrap; }
+    .nav-home .pill { flex: 1 1 100%; max-width: none; }
+    .skills-main { grid-template-columns: 1fr; }
+    .contacts { grid-column: auto; }
+    .mascot { grid-column: auto; }
+    .tech { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HOME ========== -->
+<section class="page" id="home">
+  <nav class="nav-home">
+    <a class="pill big current" href="#home">Home</a>
+    <a class="pill" href="#about">About me</a>
+    <a class="pill" href="#projects">Projects</a>
+  </nav>
+  <div class="home-main reveal">
+    <img class="photo" src="images/home.jpg" alt="Photo of Francis">
+    <h1 class="welcome">Welcome to my home page!</h1>
+  </div>
+</section>
+
+<!-- ========== ABOUT ME ========== -->
+<section class="page" id="about">
+  <nav class="nav-sub">
+    <a class="pill current" href="#about">About me</a>
+    <a class="pill" href="#home">Home</a>
+  </nav>
+  <div class="about-main reveal">
+    <img class="photo" src="images/about.jpg" alt="Francis playing sports">
+    <div class="about-text">
+      <p>Hi, my name is Francis, and I am a second-year Information Systems student at DFCAMCLP. In my free time, I like to play sports such as basketball, volleyball, and badminton. Playing sports keeps my body active and helps me stay healthy. It also helps me relax when I have problems or when I cannot think clearly. After I play, I feel calm and ready to focus again.</p>
+      <p>I also like to explore new things that can help me learn more. I enjoy reading about technology, watching tutorials, and trying new ideas. These interests help me grow my skills and think in creative ways. I believe that learning new things and staying active can help me become a better student and a better person.</p>
+    </div>
+  </div>
+  <a class="step next" href="#skills">Next
+    <span class="arrow"><svg viewBox="0 0 24 24"><path d="M3 5l8 7-8 7zM12 5l8 7-8 7z"/></svg></span>
+  </a>
+</section>
+
+<!-- ========== SKILLS & CONTACTS ========== -->
+<section class="page" id="skills">
+  <nav class="nav-sub">
+    <a class="pill current" href="#about">About me</a>
+  </nav>
+  <div class="skills-main reveal">
+    <div>
+      <h3>Soft skills:</h3>
+      <ul>
+        <li>-Communication</li>
+        <li>-Teamwork</li>
+        <li>-Leadership</li>
+        <li>-Critical thinking</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <h3>Technical skills:</h3>
+      <p><strong>Programming:</strong><br>Python, Java, HTML, CSS, JavaScript</p>
+    </div>
+    <img class="mascot" src="images/dino.png" alt="Smiling green dinosaur mascot">
+    <div class="contacts">
+      <h3>Contacts:</h3>
+      <ul>
+        <li>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#e0b72b"/><path d="M8 6h3l1 4-2 1a9 9 0 004 4l1-2 4 1v3a2 2 0 01-2 2A12 12 0 016 8a2 2 0 012-2z" fill="#333"/></svg>
+          09461921195
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M2 6l10 8 10-8"/></svg>
+          loyolafrancisdion@gmail.com
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2C6.5 2 2 6 2 11c0 2.7 1.3 5 3.4 6.600V22l3.200-1.800c.7.2 1.500.3 2.400.3 5.500 0 10-4 10-9S17.500 2 12 2z"/><path d="M6 14l4-4 3 2.500 4-2.500-4 4.500-3-2.500z"/></svg>
+          <a href="mailto:loyolafrancisdion@gmail.com">loyolafrancisdion@gmail.com</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <a class="step back" href="#about">
+    <span class="arrow"><svg viewBox="0 0 24 24"><path d="M21 5l-8 7 8 7zM12 5l-8 7 8 7z"/></svg></span>Back
+  </a>
+</section>
+
+<!-- ========== PROJECTS ========== -->
+<section class="page" id="projects">
+  <nav class="nav-sub">
+    <a class="pill current" href="#projects">Projects</a>
+    <a class="pill" href="#home">Home</a>
+  </nav>
+  <div class="projects-main reveal">
+    <article class="project">
+      <img src="images/project1.png" alt="Petique Care website preview">
+      <p>This is our first project the Price planning is about the promo prices for gym membership. It includes the prices for daily, monthly, and yearly promos.</p>
+    </article>
+    <article class="project">
+      <img src="images/project2.png" alt="FitNesse+ membership pricing preview">
+      <p>Our second project is The Petique Care website helps pet owners find health information for their pets. It also helps them keep track of what their pets need</p>
+    </article>
+  </div>
+</section>
+
+</body>
+</html>
