@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Francis — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gorditas:wght@400;700&family=Rozha+One&display=swap" rel="stylesheet">
+<style>
+:root{--top:#33055a;--bottom:#a000ff;--pill:rgba(255,255,255,.25);--pill-line:rgba(255,255,255,.35)}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bottom)}
+body{margin:0;min-height:100vh;color:#fff;font-family:'Gorditas',Georgia,serif;
+ background:linear-gradient(180deg,var(--top),var(--bottom));background-attachment:fixed;
+ }
+h1,h2,.pill,.corner-btn{font-family:'Rozha One',Georgia,serif;font-weight:400}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+ 
+/* navigation pills */
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.pill{display:inline-block;background:var(--pill);border:2px solid var(--pill-line);border-radius:999px;
+ padding:.45em 1.4em;font-size:clamp(20px,3.2vw,34px);text-transform:uppercase;transition:transform .2s,background .2s}
+.pill:hover{transform:translateY(-3px);background:rgba(255,255,255,.38)}
+.pill.small{font-size:clamp(16px,2.2vw,24px);padding:.25em 1em}
+.pill.current{background:rgba(255,255,255,.4)}
+.home-nav{justify-content:space-between}
+.home-nav .pill{flex:1 1 0;text-align:center;max-width:330px}
+ 
+/* home */
+.home-main{flex:1;display:grid;grid-template-columns:minmax(0,600px) 1fr;gap:clamp(24px,5vw,80px);align-items:center;margin-top:24px}
+.home-main img{width:100%;aspect-ratio:1/1.12;object-fit:cover}
+.home-main h1{font-size:clamp(34px,5vw,58px);line-height:1.25;text-align:center;margin:0}
+ 
+/* about */
+.center-photo{display:block;margin:0 auto;width:min(550px,70%);aspect-ratio:4/3;object-fit:cover}
+.about-text{max-width:1050px;margin:28px auto 0;text-align:center;font-size:clamp(15px,1.7vw,20px);line-height:1.55}
+.about-text p{margin:0 0 1.4em}
+ 
+/* skills */
+.skills-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr minmax(0,420px);gap:30px;align-items:center;margin-top:20px}
+.skills-wrap h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 .6em}
+.skills-wrap ul{list-style:none;padding:0;margin:0;font-family:'Rozha One',serif;font-size:clamp(20px,2.4vw,28px);line-height:1.6}
+.tech{text-align:center}.tech p{font-family:'Rozha One',serif;font-size:clamp(20px,2.4vw,28px);margin:0}
+.contacts{grid-column:1/3}
+.contacts ul{font-family:'Gorditas',serif;font-size:clamp(14px,1.6vw,18px);line-height:2.2}
+.contacts li{display:flex;align-items:center;gap:12px;overflow-wrap:anywhere}
+.contacts svg{width:26px;height:26px;flex:none}
+.contacts a:hover{text-decoration:underline}
+.mascot{grid-column:3;grid-row:1/3;width:100%;height:auto;max-height:430px;object-fit:contain}
+ 
+/* projects */
+.project-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);margin-top:40px;align-items:start}
+.project{text-align:center}
+.project img{width:100%;max-width:750px;aspect-ratio:16/9;object-fit:cover;margin:0 auto 32px;border:2px solid #8a4dff}
+.project p{font-family:'Rozha One',serif;font-size:clamp(18px,2.3vw,28px);line-height:1.45;margin:0 auto;max-width:480px}
+ 
+/* next / back */
+.corner-btn{align-self:flex-end;margin-top:30px;font-size:clamp(24px,3vw,36px);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
+.corner-btn svg{width:42px;height:42px;fill:rgba(255,255,255,.6);transition:transform .2s}
+.corner-btn.next:hover svg{transform:translateX(6px)}
+.corner-btn.back:hover svg{transform:translateX(-6px)}
+ 
+@media (max-width:760px){
+ .home-nav .pill{font-size:15px;padding:.4em .6em}
+ .home-main,.project-grid{grid-template-columns:1fr}
+ .home-main img{max-width:340px;margin:0 auto}
+ .skills-wrap{grid-template-columns:1fr 1fr}
+ .contacts{grid-column:1/-1}
+ .mascot{grid-column:1/-1;grid-row:auto;max-width:300px;margin:0 auto}
+ .topbar .pill{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+ 
+.page{display:none;min-height:100vh;flex-direction:column;padding:28px clamp(16px,3vw,32px) 40px}
+.page.active{display:flex}
+ 
+</style></head><body>
+ 
+<!-- HOME -->
+<div class="page active" id="home">
+<nav class="topbar home-nav" aria-label="Main"><a class="pill current" href="#home">Home</a><a class="pill" href="#about">About me</a><a class="pill" href="#projects">Projects</a></nav>
+<main class="home-main"><img src="images/dion.png" alt="Francis wearing his purple Information Systems jersey"><h1>Welcome to my home page!</h1></main>
+</div>
+ 
+<!-- ABOUT ME -->
+<div class="page" id="about">
+<nav class="topbar" aria-label="Main"><a class="pill current" href="#about">About me</a><a class="pill small" href="#home">Home</a></nav>
+<main><img class="center-photo" src="images/dioon.jpg" alt="Francis in a black jersey waving at the camera">
+<div class="about-text"><p>Hi, my name is Francis, and I am a second-year Information Systems student at DFCAMCLP. In my free time, I like to play sports such as basketball, volleyball, and badminton. Playing sports keeps my body active and helps me stay healthy. It also helps me relax when I have problems or when I cannot think clearly. After I play, I feel calm and ready to focus again.</p>
+<p>I also like to explore new things that can help me learn more. I enjoy reading about technology, watching tutorials, and trying new ideas. These interests help me grow my skills and think in creative ways. I believe that learning new things and staying active can help me become a better student and a better person.</p></div></main>
+<a class="corner-btn next" href="#skills">Next <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 6l18 18L6 42zM24 6l18 18-18 18z"/></svg></a>
+</div>
+ 
+<!-- SKILLS & CONTACTS -->
+<div class="page" id="skills">
+<nav class="topbar" aria-label="Main"><a class="pill current" href="#about">About me</a></nav>
+<main class="skills-wrap">
+<section><h2>Soft skills:</h2><ul><li>-Communication</li><li>-Teamwork</li><li>-Leadership</li><li>-Critical thinking</li></ul></section>
+<section class="tech"><h2>Technical skills:</h2><p>Programming:<br>Python, Java,<br>HTML, CSS,<br>JavaScript</p></section>
+<img class="mascot" src="https://mystickermania.com/cdn/stickers/animals/cute-t-rex-512x512.png" alt="Friendly green cartoon dinosaur">
+<section class="contacts"><h2>Contacts:</h2><ul>
+<li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#e0b81f"/><path d="M8 7h3l1 3-1.5 1a7 7 0 003 3L14 13l3 1v3a2 2 0 01-2 2A9 9 0 016 10a2 2 0 012-3z" fill="#fff"/></svg><a href="tel:09461921195">09461921195</a></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M2 6l10 8 10-8"/></svg><a href="mailto:loyolafrancisdion@gmail.com">loyolafrancisdion@gmail.com</a></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2a10 10 0 00-8.5 15.2L2.5 22l4.9-1.2A10 10 0 1012 2z"/><path d="M6.5 14l3.5-4 3 2.5 3.5-3.5-3.5 5-3-2.5z" fill="#fff"/></svg><a href="https://m.me/YOUR-MESSENGER-USERNAME" target="_blank" rel="noopener">loyolafrancisdion@gmail.com</a></li>
+</ul></section></main>
+<a class="corner-btn back" href="#about"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M42 6L24 24l18 18zM24 6L6 24l18 18z"/></svg> Back</a>
+</div>
+ 
+<!-- PROJECTS -->
+<div class="page" id="projects">
+<nav class="topbar" aria-label="Main"><a class="pill current" href="#projects">Projects</a><a class="pill small" href="#home">Home</a></nav>
+<main class="project-grid">
+<article class="project"><img src="images/gym.png" alt="FitNesse+ gym membership pricing"><p>This is our first project the Price planning is about the promo prices for gym membership. It includes the prices for daily, monthly, and yearly promos.</p></article>
+<article class="project"><img src="images/pet.png" alt="Petique Care website home page"><p>Our second project is The Petique Care website helps pet owners find health information for their pets. It also helps them keep track of what their pets need</p></article>
+</main>
+</div>
+ 
+<script>
+// Shows the page that matches the link (#home, #about, #skills, #projects)
+function showPage(){
+  var id=location.hash.slice(1);
+  if(!document.getElementById(id)||!document.getElementById(id).classList.contains('page')) id='home';
+  document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active',p.id===id)});
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',showPage);
+showPage();
+</script>
+</body></html>
+ 
